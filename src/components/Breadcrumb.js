@@ -1,15 +1,17 @@
 
 const Breadcrumb = (props) =>{
-    console.log(props);
-    const isLast = (index)=>{
-        return index === props.crumbs.length -1;
+    const isDisableBtn = (index)=>{
+        if(index === props.crumbs.length -1)
+            return true;
+        return props.disableBtn;
     }
     return(
         <nav>
-            {props.crumbs.map((crumb, index)=>{
-                const disabled = isLast(index) ? 'disabled':'';
+            {
+            props.crumbs.map((crumb, index)=>{
+                const disabled = isDisableBtn(index) ? 'disabled':'';
                 return (
-                    <button className={`bt ${disabled}`} onClick={()=>props.selected(crumb)}>{crumb}</button>
+                    <button key={crumb} disabled={disabled} className={`crumb ${disabled}`} onClick={()=>props.selected(crumb)}>{crumb}</button>
                 );
             })}
         </nav>
