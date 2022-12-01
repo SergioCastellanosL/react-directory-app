@@ -1,23 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
+import Breadcrumb from './components/Breadcrumb'
+import Files from './components/Files'
 
 function App() {
+  const [crumbs, setCrumbs] = useState(['root']);
+  const [files, setFiles] = useState([]);
+  const getFiles = async (parentName) => {
+    let requestURL = `http://localhost:3001/${parentName}`;
+    let request = new Request(requestURL);
+    let response = await fetch(request);
+    return await response.json();
+  };
+  const selected = (crumb) => {
+    console.log(crumb);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div>
+      <header>
+        <h1>Title</h1>
+        <Breadcrumb
+          crumbs={crumbs}
+          selected={selected}
+        />
       </header>
+      <section>
+        <Files 
+          crumbs={crumbs}
+          getFiles={getFiles}
+        />
+      </section>
     </div>
   );
 }
