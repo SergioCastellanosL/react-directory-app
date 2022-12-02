@@ -11,16 +11,12 @@ function App() {
     setCrumbs([...crumbs,crumb]);
     
   };
-  const selectedCrumb = (crumb) => {
+  const selectedCrumb = (index) => {
     let newCrumbs= [];
-    for(let i=0;i<crumbs.length;i++){
-      if(crumbs[i] !== crumb){
+    for(let i=0;i<index+1;i++){
         newCrumbs[i] = crumbs[i];
-      }else{
-        i= crumbs.length;
-      }
     }
-    setCrumbs([...newCrumbs,crumb])
+    setCrumbs([...newCrumbs])
     
   };
   return (

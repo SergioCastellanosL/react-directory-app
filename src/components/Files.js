@@ -3,7 +3,10 @@ import { useEffect} from "react";
 const Files = ({crumbs, setFiles, files, selected, disableBtn, setDisableBtn}) =>{
     useEffect(() => {
         setDisableBtn(true);
-        let requestURL = `https://parsehub-challenge-api.vercel.app/${crumbs[crumbs.length-1]}`;
+        let requestURL = `https://parsehub-challenge-api.vercel.app`;
+        for(let i=0;i<crumbs.length;i++){
+            requestURL = requestURL + `/${crumbs[i]}`
+        }
         let request = new Request(requestURL);
         fetch(request).then((response) => response.json())
         .then((data) => {
@@ -19,7 +22,7 @@ const Files = ({crumbs, setFiles, files, selected, disableBtn, setDisableBtn}) =
             files.map((file, index)=>{
                 const disabled= disableBtn ? 'disabled': '';
                 return (
-                    <button key={file} disabled={disabled} className={`files`} onClick={()=>{selected(file)}}>{file}</button>
+                    <button key={index} disabled={disabled} className={`files`} onClick={()=>{selected(file)}}>{file}</button>
                 );
             }) : <p>{crumbs[crumbs.length-1]}: is a file</p>
             }
